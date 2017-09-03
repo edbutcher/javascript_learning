@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Game</title>
+    <style>
+        #baseDiv {
+            position: absolute;
+            width: 1002px;
+           }
+        #leftSide {
+            float: left;
+            width: 500px;
+            height: 500px;
+            position: relative;
+           }
+        #rightSide {
+            width: 500px;
+            height:500px;
+            float: left;
+            border-left: solid 1px black;
+            position: relative;
+           }
+        img {
+            position: absolute;
+            right: 5px;
+        }
+    </style>
+    <script>
+        var numberOfFaces = 5;
+        var level = 1;
+        function generateFaces() {
+
+                var theLeftSide = document.getElementById("leftSide"); // Если добавить сюда, то работает
+                var theRightSide = document.getElementById("rightSide");  // Если добавить сюда, то работает
+
+                function createElement() {
+                    var theImg = document.createElement("img");
+                    theImg.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                    theImg.style.top = Math.floor(Math.random() * 401) + "px";
+                    theImg.style.left = Math.floor(Math.random() * 401) + "px";
+                    theLeftSide.appendChild(theImg.cloneNode(true));
+                    }
+                while (numberOfFaces > 0) {
+                         createElement();
+                         numberOfFaces --;
+                     }
+                var createRightImgs = function () {
+                    var leftSideImages = theLeftSide.cloneNode(true);
+                    leftSideImages.removeChild(leftSideImages.lastChild);
+                    theRightSide.appendChild(leftSideImages);
+                };
+
+                createRightImgs();
+
+                var theBody = document.getElementsByTagName("body")[0];
+                theLeftSide.lastChild.onclick= function nextLevel(event){
+                    event.stopPropagation();
+                    numberOfFaces += 5;
+                    var delAll = theRightSide.children[0];
+                    theRightSide.removeChild(delAll);
+                    generateFaces();
+                    level++;
+                    };
+
+                theBody.onclick = function gameOver() {
+                    alert("Game Over!\n\n You cot to level " + level);
+                    theBody.onclick = null;
+                    theLeftSide.lastChild.onclick = null;
+                    };
+                }
+    </script>
+</head>
+<body onload="generateFaces()">
+
+    <h1>Matching Game</h1>
+    <p>Click on extra smiling face.</p><br>
+
+    <div id="baseDiv">
+        <div id="leftSide"></div>
+        <div id="rightSide"></div>
+    </div>
+</body>
+</html>
