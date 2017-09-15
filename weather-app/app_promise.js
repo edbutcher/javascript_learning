@@ -23,7 +23,8 @@ axios.get(geocodeUrl).then((response) => {
   }
   var lat = response.data.results[0].geometry.location.lat;
   var lng = response.data.results[0].geometry.location.lng;
-  var weatherUrl = `https://api.darksky.net/forecast/f84e395ad316a0d039797f41e5516f04/${lat},${lng}`;
+  //////Change key for darksky.net
+  var weatherUrl = `https://api.darksky.net/forecast/f84e395abd316a0d039797f41e5516f04/${lat},${lng}`;
   console.log(response.data.results[0].formatted_address);
   return axios.get(weatherUrl);
 }).then((response) => {
